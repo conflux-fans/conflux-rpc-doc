@@ -14,12 +14,6 @@ Visit [here](https://playground.open-rpc.org/?schemaUrl=https://raw.githubuserco
 - `cfx_getDepositList` `cfx_getVoteList` 当前样例只会返回空值
 - `getLogs` 参数的 `topics` 字段当前置空
 
-### 文档部分内容出错/遗漏
-
-- clientVersion 返回参数类型应为 string 而不是DATA
-- `cfx_getBlockByHash` 等 返回的 Block 对象中缺少 custom 字段
-- estimate 接口返回的对象中包含 gasLimit 字段
-
 ### 文档缺失报错部分内容
 
 现在缺少报错的错误码相关说明

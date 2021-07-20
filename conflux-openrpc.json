@@ -82,13 +82,16 @@
         "name": "Mainnet Example",
         "summary": "get block by block hash in mainnet",
         "params": [{
+            "name": "block hash",
             "value": "0x23a6e84d9a24dffc8436e72b0e240688d23e29b8cda0b301ff20baab1573c9fd"
           },
           {
+            "name": "transaction flag",
             "value": false
           }
         ],
         "result": {
+          "name": "Mainnet Result",
           "value": {
             "adaptive": false,
             "blame": "0x0",
@@ -144,13 +147,16 @@
         "name": "Mainnet Example",
         "summary": "get block by epoch number or tag in mainnet",
         "params": [{
+            "name": "param",
             "value": "latest_mined"
           },
           {
+            "name": "param",
             "value": false
           }
         ],
         "result": {
+          "name": "Mainnet Result",
           "value": {
             "adaptive": false,
             "blame": "0x0",
@@ -192,7 +198,7 @@
       }],
       "params": [],
       "result": {
-        "name": "bestBlockHash",
+        "name": "Mainnet Result",
         "summary": "hash of the best block",
         "description": "32 Bytes - hash of the best block",
         "schema": {
@@ -204,6 +210,7 @@
         "summary": "get block by epoch number or tag in mainnet",
         "params": [],
         "result": {
+          "name": "Mainnet Result",
           "value": "0x37864d62e22c6958257aa87e7923ab834e1773ca54b800b7ee4d0a1761e473ab"
         }
       }]
@@ -215,9 +222,12 @@
         "$ref": "#/components/tags/BLOCK"
       }],
       "params": [{
+        "name": "param",
         "summary": "optional, default: 'latest_mined'",
         "description": "(optional, default: `'latest_mined'`) string `'latest_mined'`, `'latest_state'`, `'latest_confirmed'`, `'latest_checkpoint'` or `'earliest'`, see [the epoch number parameter](http://developer.confluxnetwork.org/conflux-doc/docs/json_rpc/#the-epoch-number-parameter)",
-        "$ref": "#/components/contentDescriptors/epochNumberTAG"
+        "schema": {
+          "$ref": "#/components/schemas/TAG"
+        }
       }],
       "result": {
         "name": "epochNumber",
@@ -231,9 +241,11 @@
         "name": "Mainnet Example",
         "summary": "get epoch number in mainnet",
         "params": [{
+          "name": "param",
           "value": "latest_mined"
         }],
         "result": {
+          "name": "Mainnet Result",
           "value": "0x12cb90b"
         }
       }]
@@ -259,6 +271,7 @@
         "summary": "get epoch number in mainnet",
         "params": [],
         "result": {
+          "name": "Mainnet Result",
           "value": "0x1"
         }
       }]
@@ -271,8 +284,7 @@
         "$ref": "#/components/tags/BLOCK"
       }],
       "params": [{
-        "$ref": "#/components/contentDescriptors/epochNumberOrTAG",
-        "required": true
+        "$ref": "#/components/contentDescriptors/epochNumberOrTAG"
       }],
       "result": {
         "name": "blockHashArray",
@@ -290,9 +302,11 @@
         "name": "Mainnet Example",
         "summary": "get blocks by epoch number parameter in mainnet",
         "params": [{
+          "name": "param",
           "value": "latest_mined"
         }],
         "result": {
+          "name": "Mainnet Result",
           "value": [
             "0x74dc7160a21b55ad26e101f6554854da7939586514ab364ee70fa67743e373c9",
             "0x9e24f23ffb55aa1c48e97710a5f2897e8674703e44e1129e887e2378646ed039"
@@ -308,9 +322,12 @@
         "$ref": "#/components/tags/ACCOUNT"
       }],
       "params": [{
+          "name": "param",
           "summary": "address to check for balance",
           "description": "address to check for balance",
-          "$ref": "#/components/contentDescriptors/address",
+          "schema": {
+            "$ref": "#/components/schemas/BASE32"
+          },
           "required": true
         },
         {
@@ -329,13 +346,16 @@
         "name": "Mainnet Example",
         "summary": "get balance of address in mainnet",
         "params": [{
+            "name": "param",
             "value": "cfx:type.user:aarc9abycue0hhzgyrr53m6cxedgccrmmyybjgh4xg"
           },
           {
+            "name": "param",
             "value": "latest_state"
           }
         ],
         "result": {
+          "name": "Mainnet Result",
           "value": "0x0234c8a3397aab58"
         }
       }]
@@ -348,9 +368,12 @@
         "$ref": "#/components/tags/ACCOUNT"
       }],
       "params": [{
+          "name": "param",
           "summary": "address to check for staking balance",
           "description": "address to check for staking balance",
-          "$ref": "#/components/contentDescriptors/address",
+          "schema": {
+            "$ref": "#/components/schemas/BASE32"
+          },
           "required": true
         },
         {
@@ -369,13 +392,16 @@
         "name": "Mainnet Example",
         "summary": "get staking balance of address in mainnet",
         "params": [{
+            "name": "param",
             "value": "cfx:type.user:aarc9abycue0hhzgyrr53m6cxedgccrmmyybjgh4xg"
           },
           {
+            "name": "param",
             "value": "latest_state"
           }
         ],
         "result": {
+          "name": "Mainnet Result",
           "value": "0x0"
         }
       }]
@@ -388,9 +414,12 @@
         "$ref": "#/components/tags/ACCOUNT"
       }],
       "params": [{
+          "name": "param",
           "summary": "address to check for collateral storage",
           "description": "address to check for collateral storage",
-          "$ref": "#/components/contentDescriptors/address",
+          "schema": {
+            "$ref": "#/components/schemas/BASE32"
+          },
           "required": true
         },
         {
@@ -409,13 +438,16 @@
         "name": "Mainnet Example",
         "summary": "get collateral storage of address in mainnet",
         "params": [{
+            "name": "param",
             "value": "cfx:type.user:aarc9abycue0hhzgyrr53m6cxedgccrmmyybjgh4xg"
           },
           {
+            "name": "param",
             "value": "latest_state"
           }
         ],
         "result": {
+          "name": "Mainnet Result",
           "value": "0x0234c8a8"
         }
       }]
@@ -432,9 +464,12 @@
         }
       ],
       "params": [{
+          "name": "param",
           "summary": "address of the contract",
           "description": "address of the contract",
-          "$ref": "#/components/contentDescriptors/address",
+          "schema": {
+            "$ref": "#/components/schemas/BASE32"
+          },
           "required": true
         },
         {
@@ -459,9 +494,11 @@
         "name": "Mainnet Example",
         "summary": "get admin address of a contract in mainnet",
         "params": [{
+          "name": "param",
           "value": "cfx:type.contract:acc7uawf5ubtnmezvhu9dhc6sghea0403y2dgpyfjp"
         }],
         "result": {
+          "name": "Mainnet Result",
           "value": "CFX:TYPE.USER:AAT8NZGDDRS7A2XNV2ZS4EUJSR9XDG3FRJXHPB7562"
         }
       }]
@@ -478,9 +515,12 @@
         }
       ],
       "params": [{
+          "name": "param",
           "summary": "address of the contract",
           "description": "address of the contract",
-          "$ref": "#/components/contentDescriptors/address",
+          "schema": {
+            "$ref": "#/components/schemas/BASE32"
+          },
           "required": true
         },
         {
@@ -499,9 +539,11 @@
         "name": "Mainnet Example",
         "summary": "get byte code of a contract in mainnet",
         "params": [{
+          "name": "param",
           "value": "cfx:type.contract:acc7uawf5ubtnmezvhu9dhc6sghea0403y2dgpyfjp"
         }],
         "result": {
+          "name": "Mainnet Result",
           "value": "0x6080604052600436106100705760003560e01c80638da5cb5b1161004e5780638da5cb5b14610146578063a035b1fe14610"
         }
       }]
@@ -518,9 +560,12 @@
         }
       ],
       "params": [{
+          "name": "param",
           "summary": "address of the contract",
           "description": "address of the contract",
-          "$ref": "#/components/contentDescriptors/address",
+          "schema": {
+            "$ref": "#/components/schemas/BASE32"
+          },
           "required": true
         },
         {
@@ -555,13 +600,17 @@
         "name": "Mainnet Example",
         "summary": "get contents of the storage position in mainnet",
         "params": [{
+          "name": "param",
           "value": "cfx:type.contract:acc7uawf5ubtnmezvhu9dhc6sghea0403y2dgpyfjp"
-        },{
+        }, {
+          "name": "param",
           "value": "0x0000000000000000000000000000000000000000000000000000000000000000"
-        },{
+        }, {
+          "name": "param",
           "value": "latest_state"
         }],
         "result": {
+          "name": "Mainnet Result",
           "value": "0x0000000000000000000000000000000000000000000000000000000000000001"
         }
       }]
@@ -578,9 +627,12 @@
         }
       ],
       "params": [{
+          "name": "param",
           "summary": "address of the contract",
           "description": "address of the contract",
-          "$ref": "#/components/contentDescriptors/address",
+          "schema": {
+            "$ref": "#/components/schemas/BASE32"
+          },
           "required": true
         },
         {
@@ -606,9 +658,11 @@
         "name": "Mainnet Example",
         "summary": "get contract storage root in mainnet",
         "params": [{
+          "name": "param",
           "value": "cfx:type.contract:acc7uawf5ubtnmezvhu9dhc6sghea0403y2dgpyfjp"
         }],
         "result": {
+          "name": "Mainnet Result",
           "value": {
             "delta": "0x79aa954c08a2c0f6160c5afb9557e9a058779d925cb531b6cc06a6271dbc9c35",
             "intermediate": "0x999695f36a3095cb0224772057abcc3d12027f7c49f03486893b2cc9a55c6748",
@@ -629,9 +683,12 @@
         }
       ],
       "params": [{
+          "name": "param",
           "summary": "address of the contract",
           "description": "address of the contract",
-          "$ref": "#/components/contentDescriptors/address",
+          "schema": {
+            "$ref": "#/components/schemas/BASE32"
+          },
           "required": true
         },
         {
@@ -650,9 +707,11 @@
         "name": "Mainnet Example",
         "summary": "get contract sponsor info in mainnet",
         "params": [{
+          "name": "param",
           "value": "cfx:type.contract:acc7uawf5ubtnmezvhu9dhc6sghea0403y2dgpyfjp"
         }],
         "result": {
+          "name": "Mainnet Result",
           "value": {
             "sponsorBalanceForCollateral": "0x40fa436ee99e968000",
             "sponsorBalanceForGas": "0x8ac722e2dd6fdf5e",
@@ -675,9 +734,12 @@
         }
       ],
       "params": [{
+          "name": "param",
           "summary": "address of the account",
           "description": "address of the account",
-          "$ref": "#/components/contentDescriptors/address",
+          "schema": {
+            "$ref": "#/components/schemas/BASE32"
+          },
           "required": true
         },
         {
@@ -696,9 +758,11 @@
         "name": "Mainnet Example",
         "summary": "get next nonce for an account in mainnet",
         "params": [{
+          "name": "param",
           "value": "cfx:type.user:aarc9abycue0hhzgyrr53m6cxedgccrmmyybjgh4xg"
         }],
         "result": {
+          "name": "Mainnet Result",
           "value": "0x6a"
         }
       }]
@@ -731,9 +795,11 @@
         "name": "Mainnet Example",
         "summary": "send raw transaction in mainnet",
         "params": [{
+          "name": "param",
           "value": "0xf86eea8201a28207d0830f4240943838197c0c88d0d5b13b67e1bfdbdc132d4842e389056bc75e2d631000008080a017b8b26f473820475edc49bd153660e56b973b5985bbdb2828fceacb4c91f389a03452f9a69da34ef35acc9c554d7b1d63e9041141674b42c3abb1b57b9f83a2d3"
         }],
         "result": {
+          "name": "Mainnet Result",
           "value": "0xf5338a6cb85d10acc9108869f94fe322b2dfa2715d16d264676c91f6a0404b61"
         }
       }]
@@ -764,6 +830,7 @@
         "name": "Mainnet Example",
         "summary": "virtually calls a contract in mainnet",
         "params": [{
+          "name": "param",
           "value": {
             "from": "cfx:type.user:aarc9abycue0hhzgyrr53m6cxedgccrmmyybjgh4xg",
             "to": "cfx:type.contract:acc7uawf5ubtnmezvhu9dhc6sghea0403y2dgpyfjp",
@@ -773,6 +840,7 @@
           }
         }],
         "result": {
+          "name": "Mainnet Result",
           "value": "0x0"
         }
       }]
@@ -803,6 +871,7 @@
         "name": "Mainnet Example",
         "summary": "virtually executes a transaction and gets the estimate in mainnet",
         "params": [{
+          "name": "param",
           "value": {
             "from": "cfx:aatmuv92xj87ptxg6mr11c5amug2kv6ra21g7pbbrp",
             "to": "cfx:achc8nxj7r451c223m18w2dwjnmhkd6rxawrvkvsy2",
@@ -811,9 +880,12 @@
           }
         }],
         "result": {
-          "gasLimit": "0x26882",
-          "gasUsed": "0x1ce62",
-          "storageCollateralized": "0x80"
+          "name": "Mainnet Result",
+          "value": {
+            "gasLimit": "0x26882",
+            "gasUsed": "0x1ce62",
+            "storageCollateralized": "0x80"
+          }
         }
       }]
     },
@@ -848,6 +920,7 @@
         "name": "Mainnet Example",
         "summary": "get logs in mainnet",
         "params": [{
+          "name": "param",
           "value": {
             "fromEpoch": "0x12dd1e3",
             "toEpoch": "0x12dd246",
@@ -856,32 +929,34 @@
           }
         }],
         "result": {
+          "name": "Mainnet Result",
           "value": [{
-            "address": "CFX:TYPE.CONTRACT:ACC7UAWF5UBTNMEZVHU9DHC6SGHEA0403Y2DGPYFJP",
-            "blockHash": "0x3dbc0a1fc4d33800c455f094d1f02e72a5628a36bd050fbe4e6df5b60afed072",
-            "data": "0x0000000000000000000000008e2f2e68eb75bb8b18caafe9607242d4748f8d9800000000000000000000000000000000000000000000000005565a5b5edaa2cc0000000000000000000000000000000000000000000000000558685917bfc800",
-            "epochNumber": "0x12dd1f1",
-            "logIndex": "0x7",
-            "topics": [
-              "0x4d624906ce6fd4e4b8b649463516ff505029a1903a8cc34bd82b4ca0f9a479de"
-            ],
-            "transactionHash": "0x16be20b90559993d9621b524170591356abb12c04fc4bc74a336253db0769717",
-            "transactionIndex": "0x0",
-            "transactionLogIndex": "0x7"
-          },
-          {
-            "address": "CFX:TYPE.CONTRACT:ACC7UAWF5UBTNMEZVHU9DHC6SGHEA0403Y2DGPYFJP",
-            "blockHash": "0x3dbc0a1fc4d33800c455f094d1f02e72a5628a36bd050fbe4e6df5b60afed072",
-            "data": "0x00000000000000000000000087929dda85a959f52cab6083a2fba1b9973f15e00000000000000000000000000000000000000000000000000de2c6356d5c40000000000000000000000000000000000000000000000000000de295b3caf8eacc",
-            "epochNumber": "0x12dd1f1",
-            "logIndex": "0x8",
-            "topics": [
-              "0x4d624906ce6fd4e4b8b649463516ff505029a1903a8cc34bd82b4ca0f9a479de"
-            ],
-            "transactionHash": "0x16be20b90559993d9621b524170591356abb12c04fc4bc74a336253db0769717",
-            "transactionIndex": "0x0",
-            "transactionLogIndex": "0x8"
-          }]
+              "address": "CFX:TYPE.CONTRACT:ACC7UAWF5UBTNMEZVHU9DHC6SGHEA0403Y2DGPYFJP",
+              "blockHash": "0x3dbc0a1fc4d33800c455f094d1f02e72a5628a36bd050fbe4e6df5b60afed072",
+              "data": "0x0000000000000000000000008e2f2e68eb75bb8b18caafe9607242d4748f8d9800000000000000000000000000000000000000000000000005565a5b5edaa2cc0000000000000000000000000000000000000000000000000558685917bfc800",
+              "epochNumber": "0x12dd1f1",
+              "logIndex": "0x7",
+              "topics": [
+                "0x4d624906ce6fd4e4b8b649463516ff505029a1903a8cc34bd82b4ca0f9a479de"
+              ],
+              "transactionHash": "0x16be20b90559993d9621b524170591356abb12c04fc4bc74a336253db0769717",
+              "transactionIndex": "0x0",
+              "transactionLogIndex": "0x7"
+            },
+            {
+              "address": "CFX:TYPE.CONTRACT:ACC7UAWF5UBTNMEZVHU9DHC6SGHEA0403Y2DGPYFJP",
+              "blockHash": "0x3dbc0a1fc4d33800c455f094d1f02e72a5628a36bd050fbe4e6df5b60afed072",
+              "data": "0x00000000000000000000000087929dda85a959f52cab6083a2fba1b9973f15e00000000000000000000000000000000000000000000000000de2c6356d5c40000000000000000000000000000000000000000000000000000de295b3caf8eacc",
+              "epochNumber": "0x12dd1f1",
+              "logIndex": "0x8",
+              "topics": [
+                "0x4d624906ce6fd4e4b8b649463516ff505029a1903a8cc34bd82b4ca0f9a479de"
+              ],
+              "transactionHash": "0x16be20b90559993d9621b524170591356abb12c04fc4bc74a336253db0769717",
+              "transactionIndex": "0x0",
+              "transactionLogIndex": "0x8"
+            }
+          ]
         }
       }]
     },
@@ -921,9 +996,11 @@
         "name": "Mainnet Example",
         "summary": "get transaction receipt in mainnet",
         "params": [{
+          "name": "param",
           "value": "0xd78742724603bf5ea32b8ecb5c2a212bc8a93e906bd9991136bf5f784cbb4d08"
         }],
         "result": {
+          "name": "Mainnet Result",
           "value": {
             "blockHash": "0xf0375f56bd6fd2b5a470836644764e3eeaa9e5e3dc2efbc41316edf4003003f7",
             "contractCreated": null,
@@ -933,8 +1010,7 @@
             "gasFee": "0x25477",
             "gasUsed": "0x25477",
             "index": "0x0",
-            "logs": [
-              {
+            "logs": [{
                 "address": "CFX:TYPE.CONTRACT:ACC7UAWF5UBTNMEZVHU9DHC6SGHEA0403Y2DGPYFJP",
                 "data": "0x0000000000000000000000008531b4bd1662b7ca943a3d27794203c7ace53e7200000000000000000000000000000000000000000000008368a98cc8902bb80000000000000000000000000000000000000000000000008368a98cc8902bb800",
                 "topics": [
@@ -1019,9 +1095,12 @@
         "$ref": "#/components/tags/ACCOUNT"
       }],
       "params": [{
+          "name": "param",
           "summary": "address of the account",
           "description": "address of the account",
-          "$ref": "#/components/contentDescriptors/address",
+          "schema": {
+            "$ref": "#/components/schemas/BASE32"
+          },
           "required": true
         },
         {
@@ -1040,13 +1119,16 @@
         "name": "Mainnet Example",
         "summary": "get the state of a given account in mainnet",
         "params": [{
+            "name": "param",
             "value": "cfx:type.contract:acc7uawf5ubtnmezvhu9dhc6sghea0403y2dgpyfjp"
           },
           {
+            "name": "param",
             "value": "latest_state"
           }
         ],
         "result": {
+          "name": "Mainnet Result",
           "value": {
             "accumulatedInterestReturn": "0x0",
             "address": "CFX:TYPE.CONTRACT:ACC7UAWF5UBTNMEZVHU9DHC6SGHEA0403Y2DGPYFJP",
@@ -1082,9 +1164,11 @@
         "name": "Mainnet Example",
         "summary": "get interest rate in mainnet",
         "params": [{
+          "name": "param",
           "value": "latest_state"
         }],
         "result": {
+          "name": "Mainnet Result",
           "value": "0x24b675dc000"
         }
       }]
@@ -1111,9 +1195,11 @@
         "name": "Mainnet Example",
         "summary": "get interest rate in mainnet",
         "params": [{
+          "name": "param",
           "value": "latest_state"
         }],
         "result": {
+          "name": "Mainnet Result",
           "value": "0x3c35a9e557dc9ef76719db0226f"
         }
       }]
@@ -1133,13 +1219,17 @@
         "name": "user",
         "summary": "user account address",
         "description": "user account address",
-        "$ref": "#/components/contentDescriptors/address",
+        "schema": {
+          "$ref": "#/components/schemas/BASE32"
+        },
         "required": true
       }, {
         "name": "contract",
         "summary": "contract address",
         "description": "contract address",
-        "$ref": "#/components/contentDescriptors/address",
+        "schema": {
+          "$ref": "#/components/schemas/BASE32"
+        },
         "required": true
       }, {
         "name": "gasLimit",
@@ -1194,17 +1284,23 @@
         "name": "Mainnet Example",
         "summary": "check balance against transaction in mainnet",
         "params": [{
+          "name": "param",
           "value": "cfx:aatmuv92xj87ptxg6mr11c5amug2kv6ra21g7pbbrp"
         }, {
+          "name": "param",
           "value": "cfx:achc8nxj7r451c223m18w2dwjnmhkd6rxawrvkvsy2"
         }, {
+          "name": "param",
           "value": "0x26882"
         }, {
+          "name": "param",
           "value": "0x1"
         }, {
+          "name": "param",
           "value": "0x80"
         }],
         "result": {
+          "name": "Mainnet Result",
           "value": {
             "isBalanceEnough": true,
             "willPayCollateral": false,
@@ -1221,8 +1317,7 @@
         "$ref": "#/components/tags/BLOCK"
       }],
       "params": [{
-        "$ref": "#/components/contentDescriptors/epochNumberOrTAG",
-        "required": true
+        "$ref": "#/components/contentDescriptors/epochNumberOrTAG"
       }],
       "result": {
         "name": "blockHashArray",
@@ -1240,9 +1335,11 @@
         "name": "Mainnet Example",
         "summary": "get skipped blocks by epoch number parameter in mainnet",
         "params": [{
+          "name": "param",
           "value": "0xba28"
         }],
         "result": {
+          "name": "Mainnet Result",
           "value": []
         }
       }]
@@ -1283,9 +1380,11 @@
         "name": "Mainnet Example",
         "summary": "get block confirmation risk in mainnet",
         "params": [{
+          "name": "param",
           "value": "0x23a6e84d9a24dffc8436e72b0e240688d23e29b8cda0b301ff20baab1573c9fd"
         }],
         "result": {
+          "name": "Mainnet Result",
           "value": "0x2af31dc4611873bf3f70834acdae9f0f4f534f5d60585a5f1c1a3ced1b"
         }
       }]
@@ -1311,6 +1410,7 @@
         "summary": "get mainnet node status",
         "params": [],
         "result": {
+          "name": "Mainnet Result",
           "value": {
             "bestHash": "0xf814f25fdcbd8aeedcd301a67e0b1deebc5068c89a34fd129a4309f4b69c21c2",
             "blockNumber": "0x2d3d391",
@@ -1346,6 +1446,7 @@
         "summary": "get conflux-rust version",
         "params": [],
         "result": {
+          "name": "Mainnet Result",
           "value": "conflux-rust-1.1.4"
         }
       }]
@@ -1374,11 +1475,12 @@
         "name": "Mainnet Example",
         "summary": "get reward info in mainnet",
         "params": [{
+          "name": "param",
           "value": "0x5ee248"
         }],
         "result": {
-          "value": [
-            {
+          "name": "Mainnet Result",
+          "value": [{
               "author": "CFX:TYPE.USER:AATXETSP0KDARPDB5STDYEX11DR3X6SB0JW2GYKEC0",
               "baseReward": "0x1b0b87465a480000",
               "blockHash": "0x0e6e7a6a94a5b4cf4e1acef231b818c036e57c44a6c0d75cfa71bdde25b4faac",
@@ -1460,16 +1562,20 @@
         "name": "Mainnet Example",
         "summary": "get requested block if the provided pivot hash is correct in mainnet",
         "params": [{
+            "name": "param",
             "value": "0x23a6e84d9a24dffc8436e72b0e240688d23e29b8cda0b301ff20baab1573c9fd"
           },
           {
+            "name": "param",
             "value": "0x23a6e84d9a24dffc8436e72b0e240688d23e29b8cda0b301ff20baab1573c9fd"
           },
           {
+            "name": "param",
             "value": "0x10c3e6e"
           }
         ],
         "result": {
+          "name": "Mainnet Result",
           "value": {
             "adaptive": false,
             "blame": "0x0",
@@ -1496,28 +1602,26 @@
             ],
             "size": "0x1f6",
             "timestamp": "0x60cef8dc",
-            "transactions": [
-              {
-                "blockHash": "0x23a6e84d9a24dffc8436e72b0e240688d23e29b8cda0b301ff20baab1573c9fd",
-                "chainId": "0x405",
-                "contractCreated": null,
-                "data": "0x9bd9bbc60000000000000000000000008e45db7d866eb1a54992b24d2a8f45d53998100c0000000000000000000000000000000000000000000000000b1a2bc2ec50000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000002000000000000000000000000101130e9d3b904b18586db51cc2db1559d47610e0000000000000000000000001ea847f89a3dd63e66e29b7b8b60540d84c78d0600000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000429d069189e000000000000000000000000000000000000000000000000000006f05b59d3b20000",
-                "epochHeight": "0x10c3e51",
-                "from": "CFX:TYPE.USER:AATMUV92XJ87PTXG6MR11C5AMUG2KV6RA21G7PBBRP",
-                "gas": "0x26882",
-                "gasPrice": "0x1",
-                "hash": "0xa2ae4700d3ca272c773628a6bf8c2a7fc794a2d3b27e675107df0f6b1a6cbad7",
-                "nonce": "0x7",
-                "r": "0xf0daa3ceb35f38be4a22309f003ae0cbfbfe62473300140a64d3131c64efbe45",
-                "s": "0x12f7b8248effa5a49eae92b3c1b055e7dcd58f54fb1347958d9acef88490e53",
-                "status": "0x0",
-                "storageLimit": "0x80",
-                "to": "CFX:TYPE.CONTRACT:ACHC8NXJ7R451C223M18W2DWJNMHKD6RXAWRVKVSY2",
-                "transactionIndex": "0x0",
-                "v": "0x0",
-                "value": "0x0"
-              }
-            ],
+            "transactions": [{
+              "blockHash": "0x23a6e84d9a24dffc8436e72b0e240688d23e29b8cda0b301ff20baab1573c9fd",
+              "chainId": "0x405",
+              "contractCreated": null,
+              "data": "0x9bd9bbc60000000000000000000000008e45db7d866eb1a54992b24d2a8f45d53998100c0000000000000000000000000000000000000000000000000b1a2bc2ec50000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000002000000000000000000000000101130e9d3b904b18586db51cc2db1559d47610e0000000000000000000000001ea847f89a3dd63e66e29b7b8b60540d84c78d0600000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000429d069189e000000000000000000000000000000000000000000000000000006f05b59d3b20000",
+              "epochHeight": "0x10c3e51",
+              "from": "CFX:TYPE.USER:AATMUV92XJ87PTXG6MR11C5AMUG2KV6RA21G7PBBRP",
+              "gas": "0x26882",
+              "gasPrice": "0x1",
+              "hash": "0xa2ae4700d3ca272c773628a6bf8c2a7fc794a2d3b27e675107df0f6b1a6cbad7",
+              "nonce": "0x7",
+              "r": "0xf0daa3ceb35f38be4a22309f003ae0cbfbfe62473300140a64d3131c64efbe45",
+              "s": "0x12f7b8248effa5a49eae92b3c1b055e7dcd58f54fb1347958d9acef88490e53",
+              "status": "0x0",
+              "storageLimit": "0x80",
+              "to": "CFX:TYPE.CONTRACT:ACHC8NXJ7R451C223M18W2DWJNMHKD6RXAWRVKVSY2",
+              "transactionIndex": "0x0",
+              "v": "0x0",
+              "value": "0x0"
+            }],
             "transactionsRoot": "0x6a8520d409d06c9ae425309a54b64ab4893007c022aa4fec19a5b5cfc95dda89"
           }
         }
@@ -1531,9 +1635,12 @@
         "$ref": "#/components/tags/ACCOUNT"
       }],
       "params": [{
+          "name": "param",
           "summary": "address of the account",
           "description": "address of the account",
-          "$ref": "#/components/contentDescriptors/address",
+          "schema": {
+            "$ref": "#/components/schemas/BASE32"
+          },
           "required": true
         },
         {
@@ -1555,13 +1662,16 @@
         "name": "Mainnet Example",
         "summary": "get balance of address in mainnet",
         "params": [{
+            "name": "param",
             "value": "cfx:aan02vpwvz8crpa1n10j17ufceefptdc2yzkagxk5u"
           },
           {
+            "name": "param",
             "value": "latest_state"
           }
         ],
         "result": {
+          "name": "Mainnet Result",
           "value": [{
             "accumulatedInterestRate": "0x3c4517ac75006c913c52c2402e8",
             "amount": "0x8ac7230489e80000",
@@ -1582,9 +1692,12 @@
         "$ref": "#/components/tags/ACCOUNT"
       }],
       "params": [{
+          "name": "param",
           "summary": "address of the account",
           "description": "address of the account",
-          "$ref": "#/components/contentDescriptors/address",
+          "schema": {
+            "$ref": "#/components/schemas/BASE32"
+          },
           "required": true
         },
         {
@@ -1606,13 +1719,16 @@
         "name": "Mainnet Example",
         "summary": "get vote list of the given account in mainnet",
         "params": [{
+            "name": "param",
             "value": "cfx:aan02vpwvz8crpa1n10j17ufceefptdc2yzkagxk5u"
           },
           {
+            "name": "param",
             "value": "latest_state"
           }
         ],
         "result": {
+          "name": "Mainnet Result",
           "value": [{
             "amount": "0x8ac7230489e80000",
             "unlockBlockNumber": 1000000000000
