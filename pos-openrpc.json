@@ -12,10 +12,10 @@
 	"methods":[
     {
 			"name": "pos_getStatus",
-			"summary": "Returns POS chain status.",
+			"summary": "Returns PoS chain status.",
 			"params": [],
 			"result": {
-				"name": "POS chain status",
+				"name": "PoS chain status",
 				"schema": {
 					"$ref": "#/components/schemas/Status"
 				}
@@ -24,7 +24,15 @@
     {
 			"name": "pos_getCouncils",
 			"summary": "Returns POS councils.",
-			"params": [],
+			"params": [
+        {
+					"name": "Block hash",
+					"required": false,
+					"schema": {
+						"$ref": "#/components/schemas/hash32"
+					}
+				}
+      ],
 			"result": {
 				"name": "POS chain councils",
 				"schema": {
@@ -44,6 +52,13 @@
 					"required": true,
 					"schema": {
 						"$ref": "#/components/schemas/h64Address"
+					}
+				},
+        {
+					"name": "Block hash",
+					"required": false,
+					"schema": {
+						"$ref": "#/components/schemas/hash32"
 					}
 				}
       ],
@@ -135,7 +150,8 @@
         "type": "object",
         "required": [
           "chainId",
-          "roundNumber",
+          "round",
+          "epoch",
           "pivotBlockHash",
           "currentCouncil"
         ],
@@ -144,17 +160,46 @@
             "title": "PoS chain id",
             "$ref": "#components/schemas/uint"
           },
-          "roundNumber": {
-            "title": "PoS latest roundNumber",
+          "epoch": {
+            "title": "PoS latest epoch",
             "$ref": "#components/schemas/uint"
           },
-          "pivotBlockHash": {
-            "title": "PoW latest pivot block hash",
-            "$ref": "#components/schemas/hash32"
+          "round": {
+            "title": "PoS latest round",
+            "$ref": "#components/schemas/uint"
+          },
+          "pivotDecision": {
+            "title": "PoS latest decison for PoW chain",
+            "$ref": "#components/schemas/PivotBlockDecision"
           },
           "currentCouncil": {
             "title": "Current council",
             "$ref": "#components/schemas/Council"
+          },
+          "catchUpMode": {
+            "title": "Whether is catch up mode",
+            "type": "boolean"
+          }
+        }
+      },
+      "Council": {
+        "title": "PoS committee",
+        "type": "object",
+        "properties": {
+          "totalVotingPower": {
+            "title": "Total voting power",
+            "$ref": "#/components/schemas/uint"
+          },
+          "quorumVotingPower": {
+            "title": "Quorum voting power",
+            "$ref": "#/components/schemas/uint"
+          },
+          "committees": {
+            "title": "committees",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
@@ -174,8 +219,8 @@
             "title": "Status start time",
             "$ref": "#/components/schemas/uint"
           },
-          "votes": {
-            "title": "Number of vote",
+          "votePower": {
+            "title": "Number of votes",
             "$ref": "#/components/schemas/uint"
           }
         }
@@ -198,15 +243,19 @@
         "title": "PoS Block",
         "type": "object",
         "properties": {
-          "round": {
-            "title": "Block round number",
-            "$ref": "#/components/schemas/uint"
-          },
           "epoch": {
             "title": "Epoch number corresponds to the set of validators that are active for this block",
             "$ref": "#/components/schemas/uint"
           },
+          "round": {
+            "title": "Block round number",
+            "$ref": "#/components/schemas/uint"
+          },
           "hash": {
+            "title": "Block hash",
+            "$ref": "#/components/schemas/hash32"
+          },
+          "parentHash": {
             "title": "Block hash",
             "$ref": "#/components/schemas/hash32"
           },
@@ -222,18 +271,11 @@
             "title": "Leader public key",
             "$ref": "#/components/schemas/h64Address"
           },
-          "previousBlockVotes": {
-            "title": "Previous block multi signature",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/h64Address"
-            }
-          },
           "transactions": {
             "items": {
               "oneOf": [
                 {
-                  "title": "Transaction hashes",
+                  "title": "Transaction hash",
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/hash32"
@@ -262,18 +304,6 @@
           "from": {
             "title": "Transaction sender",
             "$ref": "#/components/schemas/h64Address"
-          },
-          "nonce": {
-            "title": "Sender's sequence number",
-            "$ref": "#/components/schemas/uint"
-          },
-          "gasLimit": {
-            "title": "",
-            "$ref": "#/components/schemas/uint"
-          },
-          "gasPrice": {
-            "title": "",
-            "$ref": "#/components/schemas/uint"
           },
           "chainId": {
             "title": "",
@@ -348,23 +378,6 @@
         "type": "object",
         "properties": {
           
-        }
-      },
-      "Council": {
-        "title": "PoS committee",
-        "type": "object",
-        "properties": {
-          "startBlock": {
-            "title": "Start block number",
-            "$ref": "#/components/schemas/uint"
-          },
-          "committees": {
-            "title": "committees",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Account"
-            }
-          }
         }
       },
       "h40Address": {
