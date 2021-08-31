@@ -22,8 +22,8 @@
 			}
 		},
     {
-			"name": "pos_getCouncils",
-			"summary": "Returns POS councils.",
+			"name": "pos_getCouncil",
+			"summary": "Returns POS council.",
 			"params": [
         {
 					"name": "Block hash",
@@ -172,10 +172,6 @@
             "title": "PoS latest decison for PoW chain",
             "$ref": "#components/schemas/PivotBlockDecision"
           },
-          "currentCouncil": {
-            "title": "Current council",
-            "$ref": "#components/schemas/Council"
-          },
           "catchUpMode": {
             "title": "Whether is catch up mode",
             "type": "boolean"
@@ -251,25 +247,40 @@
             "title": "Block round number",
             "$ref": "#/components/schemas/uint"
           },
+          "version": {
+            "title": "Block version number",
+            "$ref": "#/components/schemas/uint"
+          },
+          "blockNumber": {
+            "title": "Block number",
+            "$ref": "#/components/schemas/uint"
+          },
           "hash": {
             "title": "Block hash",
             "$ref": "#/components/schemas/hash32"
           },
           "parentHash": {
-            "title": "Block hash",
+            "title": "Block parent hash",
             "$ref": "#/components/schemas/hash32"
-          },
-          "pivot": {
-            "title": "",
-            "$ref": "#/components/schemas/PivotBlockDecision"
           },
           "timestamp": {
             "title": "Block timestamp",
             "$ref": "#/components/schemas/uint"
           },
-          "proposer": {
-            "title": "Leader public key",
-            "$ref": "#/components/schemas/h64Address"
+          "miner": {
+            "title": "Miner address",
+            "$ref": "#/components/schemas/hash32"
+          },
+          "pivotDecision": {
+            "title": "Pivot decision",
+            "$ref": "#/components/schemas/PivotBlockDecision"
+          },
+          "signatures": {
+            "title": "",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "transactions": {
             "items": {
