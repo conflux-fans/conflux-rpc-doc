@@ -149,28 +149,23 @@
         "title": "PoS chain status",
         "type": "object",
         "required": [
-          "chainId",
-          "round",
+          "blockNumber",
           "epoch",
           "pivotBlockHash",
           "currentCouncil"
         ],
         "properties": {
-          "chainId": {
-            "title": "PoS chain id",
-            "$ref": "#components/schemas/uint"
-          },
           "epoch": {
             "title": "PoS latest epoch",
-            "$ref": "#components/schemas/uint"
+            "$ref": "#/components/schemas/uint"
           },
-          "round": {
-            "title": "PoS latest round",
-            "$ref": "#components/schemas/uint"
+          "blockNumber": {
+            "title": "PoS latest block number",
+            "$ref": "#/components/schemas/uint"
           },
           "pivotDecision": {
             "title": "PoS latest decison for PoW chain",
-            "$ref": "#components/schemas/PivotBlockDecision"
+            "$ref": "#/components/schemas/PivotBlockDecision"
           },
           "catchUpMode": {
             "title": "Whether is catch up mode",
@@ -251,8 +246,8 @@
             "title": "Block version number",
             "$ref": "#/components/schemas/uint"
           },
-          "blockNumber": {
-            "title": "Block number",
+          "height": {
+            "title": "height",
             "$ref": "#/components/schemas/uint"
           },
           "hash": {
