@@ -165,7 +165,7 @@
           },
           "pivotDecision": {
             "title": "PoS latest decison for PoW chain",
-            "$ref": "#/components/schemas/PivotBlockDecision"
+            "$ref": "#/components/schemas/uint"
           },
           "catchUpMode": {
             "title": "Whether is catch up mode",
@@ -268,7 +268,7 @@
           },
           "pivotDecision": {
             "title": "Pivot decision",
-            "$ref": "#/components/schemas/PivotBlockDecision"
+            "$ref": "#/components/schemas/uint"
           },
           "signatures": {
             "title": "",
