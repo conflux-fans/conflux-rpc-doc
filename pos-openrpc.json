@@ -1,147 +1,147 @@
 {
   "openrpc": "1.2.4",
-	"info": {
-		"title": "Conflux PoS JSON-RPC Specification",
-		"description": "A specification of the standard interface for Conflux PoS clients.",
-		"license": {
-			"name": "CC0-1.0",
-			"url": "https://creativecommons.org/publicdomain/zero/1.0/legalcode"
-		},
-		"version": "0.0.1"
-	},
-	"methods":[
+  "info": {
+    "title": "Conflux PoS JSON-RPC Specification",
+    "description": "A specification of the standard interface for Conflux PoS clients.",
+    "license": {
+      "name": "CC0-1.0",
+      "url": "https://creativecommons.org/publicdomain/zero/1.0/legalcode"
+    },
+    "version": "0.0.1"
+  },
+  "methods": [
     {
-			"name": "pos_getStatus",
-			"summary": "Returns PoS chain status.",
-			"params": [],
-			"result": {
-				"name": "PoS chain status",
-				"schema": {
-					"$ref": "#/components/schemas/Status"
-				}
-			}
-		},
+      "name": "pos_getStatus",
+      "summary": "Returns PoS chain status.",
+      "params": [],
+      "result": {
+        "name": "PoS chain status",
+        "schema": {
+          "$ref": "#/components/schemas/Status"
+        }
+      }
+    },
     {
-			"name": "pos_getCouncil",
-			"summary": "Returns POS council.",
-			"params": [
+      "name": "pos_getCouncil",
+      "summary": "Returns POS council.",
+      "params": [
         {
-					"name": "Block hash",
-					"required": false,
-					"schema": {
-						"$ref": "#/components/schemas/hash32"
-					}
-				}
+          "name": "Block hash",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/hash32"
+          }
+        }
       ],
-			"result": {
-				"name": "POS chain councils",
-				"schema": {
+      "result": {
+        "name": "POS chain councils",
+        "schema": {
           "type": "array",
           "items": {
             "$ref": "#/components/schemas/Council"
           }
-				}
-			}
-		},
+        }
+      }
+    },
     {
-			"name": "pos_getAccount",
-			"summary": "Returns POS account.",
-			"params": [
+      "name": "pos_getAccount",
+      "summary": "Returns POS account.",
+      "params": [
         {
-					"name": "Account address",
-					"required": true,
-					"schema": {
-						"$ref": "#/components/schemas/h64Address"
-					}
-				},
+          "name": "Account address",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/h64Address"
+          }
+        },
         {
-					"name": "Block hash",
-					"required": false,
-					"schema": {
-						"$ref": "#/components/schemas/hash32"
-					}
-				}
+          "name": "Block number",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/uint"
+          }
+        }
       ],
-			"result": {
-				"name": "POS chain account",
-				"schema": {
-					"$ref": "#/components/schemas/Account"
-				}
-			}
-		},
+      "result": {
+        "name": "POS chain account",
+        "schema": {
+          "$ref": "#/components/schemas/Account"
+        }
+      }
+    },
     {
-			"name": "pos_getBlockByNumber",
-			"summary": "Returns block by number.",
-			"params": [
+      "name": "pos_getBlockByNumber",
+      "summary": "Returns block by number.",
+      "params": [
         {
-					"name": "Block number",
-					"required": true,
-					"schema": {
-						"$ref": "#/components/schemas/uint"
-					}
-				},
-				{
-					"name": "Full transactions",
-					"required": false,
-					"schema": {
-						"title": "fullTx",
-						"type": "boolean"
-					}
-				}
+          "name": "Block number",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/uint"
+          }
+        },
+        {
+          "name": "Full transactions",
+          "required": false,
+          "schema": {
+            "title": "fullTx",
+            "type": "boolean"
+          }
+        }
       ],
-			"result": {
-				"name": "POS block",
-				"schema": {
-					"$ref": "#/components/schemas/Block"
-				}
-			}
-		},
+      "result": {
+        "name": "POS block",
+        "schema": {
+          "$ref": "#/components/schemas/Block"
+        }
+      }
+    },
     {
-			"name": "pos_getBlockByHash",
-			"summary": "Returns block by hash.",
-			"params": [
+      "name": "pos_getBlockByHash",
+      "summary": "Returns block by hash.",
+      "params": [
         {
-					"name": "Block hash",
-					"required": true,
-					"schema": {
-						"$ref": "#/components/schemas/hash32"
-					}
-				},
-				{
-					"name": "Full transactions",
-					"required": false,
-					"schema": {
-						"title": "fullTx",
-						"type": "boolean"
-					}
-				}
+          "name": "Block hash",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/hash32"
+          }
+        },
+        {
+          "name": "Full transactions",
+          "required": false,
+          "schema": {
+            "title": "fullTx",
+            "type": "boolean"
+          }
+        }
       ],
-			"result": {
-				"name": "POS block",
-				"schema": {
-					"$ref": "#/components/schemas/Block"
-				}
-			}
-		},
+      "result": {
+        "name": "POS block",
+        "schema": {
+          "$ref": "#/components/schemas/Block"
+        }
+      }
+    },
     {
-			"name": "pos_getTransactionByHash",
-			"summary": "Returns POS transaction.",
-			"params": [
+      "name": "pos_getTransactionByHash",
+      "summary": "Returns POS transaction.",
+      "params": [
         {
-					"name": "Transaction hash",
-					"required": true,
-					"schema": {
-						"$ref": "#/components/schemas/hash32"
-					}
-				}
+          "name": "Transaction hash",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/hash32"
+          }
+        }
       ],
-			"result": {
-				"name": "POS transaction",
-				"schema": {
-					"$ref": "#/components/schemas/Transaction"
-				}
-			}
-		}
+      "result": {
+        "name": "POS transaction",
+        "schema": {
+          "$ref": "#/components/schemas/Transaction"
+        }
+      }
+    }
   ],
   "components": {
     "schemas": {
@@ -199,20 +199,16 @@
         "type": "object",
         "properties": {
           "address": {
-            "title": "Account address",
+            "title": "address",
             "$ref": "#/components/schemas/h64Address"
           },
-          "status": {
-            "title": "Account status",
+          "blockNumber": {
+            "title": "Block number",
             "$ref": "#/components/schemas/uint"
           },
-          "startTime": {
-            "title": "Status start time",
-            "$ref": "#/components/schemas/uint"
-          },
-          "votePower": {
-            "title": "Number of votes",
-            "$ref": "#/components/schemas/uint"
+          "nodeLockStatus": {
+            "title": "Node lock status",
+            "$ref": "#/components/schemas/NodeLockStatus"
           }
         }
       },
@@ -344,108 +340,130 @@
           }
         }
       },
+      "NodeLockStatus": {
+        "title": "Node lock status",
+        "type": "object",
+        "properties": {
+          "inQueue": {
+            "title": "In queue votes",
+            "$ref": "#/components/schemas/uint"
+          },
+          "locked": {
+            "title": "Locked votes",
+            "$ref": "#/components/schemas/uint"
+          },
+          "outQueue": {
+            "title": "Out queue votes",
+            "$ref": "#/components/schemas/uint"
+          },
+          "unlocked": {
+            "title": "Unlocked votes",
+            "$ref": "#/components/schemas/uint"
+          },
+          "availableVotes": {
+            "title": "Available votes",
+            "$ref": "#/components/schemas/uint"
+          },
+          "forceRetired": {
+            "title": "Force_retired",
+            "type": "boolean"
+          },
+          "exemptFromForfeit": {
+            "title": "Exempt from forfeit",
+            "$ref": "#/components/schemas/uint"
+          }
+        }
+      },
       "ElectionPayload": {
         "title": "",
         "type": "object",
-        "properties": {
-
-        }
+        "properties": {}
       },
       "RetirePayload": {
         "title": "",
         "type": "object",
-        "properties": {
-          
-        }
+        "properties": {}
       },
       "UpdateVotingPowerPayload": {
         "title": "",
         "type": "object",
-        "properties": {
-          
-        }
+        "properties": {}
       },
       "DisputePayload": {
         "title": "",
         "type": "object",
-        "properties": {
-          
-        }
+        "properties": {}
       },
       "RegisterPayload": {
         "title": "",
         "type": "object",
-        "properties": {
-          
-        }
+        "properties": {}
       },
       "PivotBlockDecisionPayload": {
         "title": "",
         "type": "object",
-        "properties": {
-          
-        }
+        "properties": {}
       },
       "h40Address": {
-				"title": "hex encoded address",
-				"type": "string",
-				"pattern": "^0x[0-9a-f]{40}$"
-			},
+        "title": "hex encoded address",
+        "type": "string",
+        "pattern": "^0x[0-9a-f]{40}$"
+      },
       "address": {
-				"title": "base32 encoded address",
-				"type": "string"
-			},
+        "title": "base32 encoded address",
+        "type": "string"
+      },
       "h64Address": {
-				"title": "hex64 encoded address",
-				"pattern": "^0x[0-9a-f]{64}$"
-			},
-			"addresses": {
-				"title": "hex encoded address",
-				"type": "array",
-				"items": {
-					"$ref": "#/components/schemas/h40Address"
-				}
-			},
-			"byte": {
-				"title": "hex encoded byte",
-				"type": "string",
-				"pattern": "^0x([a-fA-F0-9]?){1,2}$"
-			},
-			"bytes": {
-				"title": "hex encoded bytes",
-				"type": "string",
-				"pattern": "^0x[0-9a-f]+$"
-			},
-			"bytes32": {
-				"title": "32 hex encoded bytes",
-				"type": "string",
-				"pattern": "^0x[0-9a-f]{64}$"
-			},
-			"bytes256": {
-				"title": "256 hex encoded bytes",
-				"type": "string",
-				"pattern": "^0x[0-9a-f]{512}$"
-			},
-			"bytes65": {
-				"title": "65 hex encoded bytes",
-				"type": "string",
-				"pattern": "^0x[0-9a-f]{512}$"
-			},
-			"uint": {
-				"title": "hex encoded unsigned integer",
-				"type": "string",
-				"pattern": "^0x[0-9a-f]+$"
-			},
-			"uint256": {
-				"title": "hex encoded unsigned integer",
-				"type": "string",
-				"pattern": "^0x[0-9a-f]{64}$"
-			},
-			"hash32": {
-				"title": "32 byte hex value",
-				"type": "string",
-				"pattern": "^0x[0-9a-f]{64}$"
-			}
+        "title": "hex64 encoded address",
+        "pattern": "^0x[0-9a-f]{64}$"
+      },
+      "addresses": {
+        "title": "hex encoded address",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/h40Address"
+        }
+      },
+      "byte": {
+        "title": "hex encoded byte",
+        "type": "string",
+        "pattern": "^0x([a-fA-F0-9]?){1,2}$"
+      },
+      "bytes": {
+        "title": "hex encoded bytes",
+        "type": "string",
+        "pattern": "^0x[0-9a-f]+$"
+      },
+      "bytes32": {
+        "title": "32 hex encoded bytes",
+        "type": "string",
+        "pattern": "^0x[0-9a-f]{64}$"
+      },
+      "bytes256": {
+        "title": "256 hex encoded bytes",
+        "type": "string",
+        "pattern": "^0x[0-9a-f]{512}$"
+      },
+      "bytes65": {
+        "title": "65 hex encoded bytes",
+        "type": "string",
+        "pattern": "^0x[0-9a-f]{512}$"
+      },
+      "uint": {
+        "title": "hex encoded unsigned integer",
+        "type": "string",
+        "pattern": "^0x[0-9a-f]+$"
+      },
+      "uint256": {
+        "title": "hex encoded unsigned integer",
+        "type": "string",
+        "pattern": "^0x[0-9a-f]{64}$"
+      },
+      "hash32": {
+        "title": "32 byte hex value",
+        "type": "string",
+        "pattern": "^0x[0-9a-f]{64}$"
+      }
     }
   }
 }
