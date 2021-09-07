@@ -166,10 +166,6 @@
           "pivotDecision": {
             "title": "PoS latest decison for PoW chain",
             "$ref": "#/components/schemas/uint"
-          },
-          "catchUpMode": {
-            "title": "Whether is catch up mode",
-            "type": "boolean"
           }
         }
       },
