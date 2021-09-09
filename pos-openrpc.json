@@ -22,24 +22,21 @@
       }
     },
     {
-      "name": "pos_getCouncil",
-      "summary": "Returns POS council.",
+      "name": "pos_getCommittee",
+      "summary": "Returns POS Committee.",
       "params": [
         {
-          "name": "Block hash",
+          "name": "Block number",
           "required": false,
           "schema": {
-            "$ref": "#/components/schemas/hash32"
+            "$ref": "#/components/schemas/uint"
           }
         }
       ],
       "result": {
-        "name": "POS chain councils",
+        "name": "POS chain Committee",
         "schema": {
-          "type": "array",
-          "items": {
-            "$ref": "#/components/schemas/Council"
-          }
+          "$ref": "#/components/schemas/CommitteeState"
         }
       }
     },
@@ -151,8 +148,7 @@
         "required": [
           "blockNumber",
           "epoch",
-          "pivotBlockHash",
-          "currentCouncil"
+          "pivotDecision"
         ],
         "properties": {
           "epoch": {
@@ -169,10 +165,37 @@
           }
         }
       },
-      "Council": {
+      "CommitteeState": {
         "title": "PoS committee",
-        "type": "object",
+        "required": [
+          "currentCommittee",
+          "elections"
+        ],
         "properties": {
+          "currentCommittee": {
+            "title": "Current Committee",
+            "$ref": "#/components/schemas/Committee"
+          },
+          "elections": {
+            "title": "Nodes open for election",
+            "type": "array",
+            "$ref": "#/components/schemas/RpcTermData"
+          }
+        }
+      },
+      "Committee": {
+        "title": "committees",
+        "required": [
+          "epochNumber",
+          "totalVotingPower",
+          "quorumVotingPower",
+          "nodes"
+        ],
+        "properties": {
+          "epochNumber": {
+            "title": "Epoch number",
+            "$ref": "#/components/schemas/uint"
+          },
           "totalVotingPower": {
             "title": "Total voting power",
             "$ref": "#/components/schemas/uint"
@@ -181,18 +204,65 @@
             "title": "Quorum voting power",
             "$ref": "#/components/schemas/uint"
           },
-          "committees": {
-            "title": "committees",
+          "nodes": {
+            "title": "Committee nodes",
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/NodeVotingPower"
             }
+          }
+        }
+      },
+      "RpcTermData": {
+        "title": "Epoch election data",
+        "type": "object",
+        "required": [
+          "startEpoch",
+          "isFinalize",
+          "topElectingNodes"
+        ],
+        "properties": {
+          "startEpoch": {
+            "title": "Be committee from the epoch number",
+            "$ref": "#/components/schemas/uint"
+          },
+          "isFinalize": {
+            "title": "Is finalize",
+            "type": "boolean"
+          },
+          "topElectingNodes": {
+            "title": "Top electing nodes",
+            "type": "array",
+            "$ref": "#/components/schemas/NodeVotingPower"
+          }
+        }
+      },
+      "NodeVotingPower": {
+        "title": "Node address and voting power",
+        "type": "object",
+        "required": [
+          "accountAddress",
+          "votingPower"
+        ],
+        "properties": {
+          "accountAddress": {
+            "title": "Account address",
+            "$ref": "#/components/schemas/hash32"
+          },
+          "votingPower": {
+            "title": "Voting power",
+            "$ref": "#/components/schemas/uint"
           }
         }
       },
       "Account": {
         "title": "PoS Account",
         "type": "object",
+        "required": [
+          "address",
+          "blockNumber",
+          "nodeLockStatus"
+        ],
         "properties": {
           "address": {
             "title": "address",
