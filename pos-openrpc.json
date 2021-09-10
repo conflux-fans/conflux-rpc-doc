@@ -218,7 +218,7 @@
         "type": "object",
         "required": [
           "startEpoch",
-          "isFinalize",
+          "isFinalized",
           "topElectingNodes"
         ],
         "properties": {
@@ -226,7 +226,7 @@
             "title": "Be committee from the epoch number",
             "$ref": "#/components/schemas/uint"
           },
-          "isFinalize": {
+          "isFinalized": {
             "title": "Is finalize",
             "type": "boolean"
           },
@@ -261,7 +261,7 @@
         "required": [
           "address",
           "blockNumber",
-          "nodeLockStatus"
+          "status"
         ],
         "properties": {
           "address": {
@@ -272,7 +272,7 @@
             "title": "Block number",
             "$ref": "#/components/schemas/uint"
           },
-          "nodeLockStatus": {
+          "status": {
             "title": "Node lock status",
             "$ref": "#/components/schemas/NodeLockStatus"
           }
