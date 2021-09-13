@@ -217,13 +217,13 @@
         "title": "Epoch election data",
         "type": "object",
         "required": [
-          "startEpoch",
+          "startView",
           "isFinalized",
           "topElectingNodes"
         ],
         "properties": {
-          "startEpoch": {
-            "title": "Be committee from the epoch number",
+          "startView": {
+            "title": "Be committee from the block number",
             "$ref": "#/components/schemas/uint"
           },
           "isFinalized": {
