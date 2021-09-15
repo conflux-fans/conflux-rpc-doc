@@ -121,14 +121,14 @@
       }
     },
     {
-      "name": "pos_getTransactionByHash",
+      "name": "pos_getTransactionByNumber",
       "summary": "Returns POS transaction.",
       "params": [
         {
-          "name": "Transaction hash",
+          "name": "Transaction number",
           "required": true,
           "schema": {
-            "$ref": "#/components/schemas/hash32"
+            "$ref": "#/components/schemas/uint"
           }
         }
       ],
@@ -146,17 +146,22 @@
         "title": "PoS chain status",
         "type": "object",
         "required": [
-          "blockNumber",
+          "latestCommitted",
           "epoch",
-          "pivotDecision"
+          "pivotDecision",
+          "latestVoted"
         ],
         "properties": {
           "epoch": {
             "title": "PoS latest epoch",
             "$ref": "#/components/schemas/uint"
           },
-          "blockNumber": {
-            "title": "PoS latest block number",
+          "latestCommitted": {
+            "title": "PoS latest committed block number",
+            "$ref": "#/components/schemas/uint"
+          },
+          "latestVoted": {
+            "title": "PoS latest voted block number",
             "$ref": "#/components/schemas/uint"
           },
           "pivotDecision": {
@@ -304,8 +309,8 @@
             "title": "Block round number",
             "$ref": "#/components/schemas/uint"
           },
-          "version": {
-            "title": "Block version number",
+          "nextTxNumber": {
+            "title": "Number of next will generated transaction",
             "$ref": "#/components/schemas/uint"
           },
           "height": {
@@ -336,7 +341,7 @@
             "title": "",
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/Signature"
             }
           },
           "transactions": {
@@ -365,21 +370,25 @@
         "title": "PoS transaction",
         "type": "object",
         "properties": {
-          "type": {
-            "title": "Transaction type",
-            "$ref": "#/components/schemas/uint"
-          },
           "from": {
             "title": "Transaction sender",
             "$ref": "#/components/schemas/h64Address"
           },
-          "chainId": {
+          "hash": {
+            "title": "",
+            "$ref": "#/components/schemas/hash32"
+          },
+          "blockHash": {
+            "title": "",
+            "$ref": "#/components/schemas/hash32"
+          },
+          "number": {
             "title": "",
             "$ref": "#/components/schemas/uint"
           },
-          "expirationTimestamp": {
-            "title": "Expiration",
-            "$ref": "#/components/schemas/uint"
+          "status": {
+            "title": "",
+            "type": "string"
           },
           "payload": {
             "title": "Transaction payload",
@@ -403,6 +412,20 @@
                 "$ref": "#/components/schemas/PivotBlockDecisionPayload"
               }
             ]
+          }
+        }
+      },
+      "Signature": {
+        "title": "Block signature",
+        "type": "object",
+        "properties": {
+          "account": {
+            "title": "Node account address",
+            "$ref": "#/components/schemas/hash32"
+          },
+          "votes": {
+            "title": "Node vote number",
+            "$ref": "#/components/schemas/uint"
           }
         }
       },
