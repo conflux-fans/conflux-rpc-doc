@@ -67,6 +67,25 @@
       }
     },
     {
+      "name": "pos_getRewardsByEpoch",
+      "summary": "Returns PoS reward",
+      "params": [
+        {
+          "name": "PoS Epoch",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/uint"
+          }
+        }
+      ],
+      "result": {
+        "name": "PoS epoch rewards",
+        "schema": {
+          "$ref": "#/components/schemas/EpochReward"
+        }
+      }
+    },
+    {
       "name": "pos_getBlockByNumber",
       "summary": "Returns block by number.",
       "params": [
@@ -166,6 +185,42 @@
           },
           "pivotDecision": {
             "title": "PoS latest decison for PoW chain",
+            "$ref": "#/components/schemas/uint"
+          }
+        }
+      },
+      "EpochReward": {
+        "title": "Epoch reward",
+        "required": [
+          "powEpochHash",
+          "accountRewards"
+        ],
+        "properties": {
+          "powEpochHash": {
+            "title": "PoW pivot chain's epoch hash",
+            "$ref": "#/components/schemas/hash32"
+          },
+          "accountRewards": {
+            "title": "Account rewards",
+            "type": "array",
+            "$ref": "#/components/schemas/EpochAccountReward"
+          }
+        }
+      },
+      "EpochAccountReward": {
+        "title": "",
+        "required": [],
+        "properties": {
+          "posAddress": {
+            "title": "",
+            "$ref": "#/components/schemas/hash32"
+          },
+          "powAddress": {
+            "title": "",
+            "type": "string"
+          },
+          "reward": {
+            "title": "",
             "$ref": "#/components/schemas/uint"
           }
         }
@@ -342,26 +397,6 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Signature"
-            }
-          },
-          "transactions": {
-            "items": {
-              "oneOf": [
-                {
-                  "title": "Transaction hash",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/hash32"
-                  }
-                },
-                {
-                  "title": "Full transactions",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Transaction"
-                  }
-                }
-              ]
             }
           }
         }
