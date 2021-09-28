@@ -7,7 +7,7 @@
       "name": "CC0-1.0",
       "url": "https://creativecommons.org/publicdomain/zero/1.0/legalcode"
     },
-    "version": "0.0.1"
+    "version": "0.1.0"
   },
   "methods": [
     {
@@ -15,19 +15,47 @@
       "summary": "Returns PoS chain status.",
       "params": [],
       "result": {
-        "name": "PoS chain status",
+        "name": "PoS chain current status",
+        "description": "PoS chain current status",
         "schema": {
           "$ref": "#/components/schemas/Status"
         }
-      }
+      },
+      "errors": [
+        {
+          "code": -32078,
+          "message": "PoS chain is not enabled"
+        }, {
+          "code": -32602,
+          "message": "Invalid parameters: No parameters were expected",
+          "data": "Array([String(\"0x1\")])"
+        }
+      ],
+      "examples": [
+        {
+          "name": "statusExample",
+          "description": "Current network's status",
+          "params": [],
+          "result": {
+            "name": "currentStatusExample",
+            "value": {
+              "epoch": "0x1",
+              "latestCommitted": "0x23",
+              "latestVoted": "0x25",
+              "pivotDecision": "0x1d10"
+            }
+          }
+        }
+      ]
     },
     {
       "name": "pos_getCommittee",
       "summary": "Returns PoS Committee.",
       "params": [
         {
-          "name": "Block number",
-          "summary": "Block number",
+          "name": "BlockNumber",
+          "summary": "Optional block number",
+          "description": "An parameter block number can be pass to get Committee at specified block",
           "required": false,
           "schema": {
             "$ref": "#/components/schemas/uint"
@@ -35,25 +63,67 @@
         }
       ],
       "result": {
-        "name": "PoS chain Committee",
+        "name": "ChainCommitte",
+        "description": "PoS chain Committee, if not found will return null",
         "schema": {
           "$ref": "#/components/schemas/CommitteeState"
         }
-      }
+      },
+      "errors": [
+        {
+          "code": -32078,
+          "message": "PoS chain is not enabled"
+        }
+      ],
+      "examples": [
+        {
+          "name": "currentCommitteExample",
+          "description": "Current committee",
+          "params": [],
+          "result": {
+            "name": "",
+            "value": {
+              "currentCommittee": {
+                "epochNumber": "0x1",
+                "nodes": [
+                  {
+                    "address": "0x6f2e774cb8b83957d29e6a0b06551c11e632e1a0f46bee0d82b2fdc2b82fe4f9",
+                    "votingPower": "0x1"
+                  }
+                ],
+                "quorumVotingPower": "0x1",
+                "totalVotingPower": "0x1"
+              },
+              "elections": [
+                {
+                  "isFinalized": false,
+                  "startBlockNumber": "0x168",
+                  "topElectingNodes": []
+                },
+                {
+                  "isFinalized": false,
+                  "startBlockNumber": "0x1a4",
+                  "topElectingNodes": []
+                }
+              ]
+            }
+          }
+        }
+      ]
     },
     {
       "name": "pos_getAccount",
       "summary": "Returns PoS account.",
       "params": [
         {
-          "name": "Account address",
+          "name": "AccountAddress",
           "required": true,
           "schema": {
             "$ref": "#/components/schemas/hash32"
           }
         },
         {
-          "name": "Block number",
+          "name": "BlockNumber",
           "required": false,
           "schema": {
             "$ref": "#/components/schemas/uint"
@@ -61,18 +131,63 @@
         }
       ],
       "result": {
-        "name": "PoS chain account",
+        "name": "PoSChainAccount",
+        "description": "If not found will return null",
         "schema": {
           "$ref": "#/components/schemas/Account"
         }
-      }
+      },
+      "errors": [
+        {
+          "code": -32078,
+          "message": "PoS chain is not enabled"
+        }, {
+          "code": -32602,
+          "message": "Invalid params: invalid length 65, expected a 0x-prefixed hex string with length of 64."
+        }, {
+          "code": -32602,
+          "message": "`params` should have at least 1 argument(s)"
+        }, {
+          "code": -32602,
+          "message": "Invalid parameters: Expected from 1 to 2 parameters.",
+          "data": "\"Got: 3\""
+        }
+      ],
+      "examples": [
+        {
+          "name": "accountExample",
+          "description": "Account example",
+          "params": [
+            {
+              "name": "AccountAddress",
+              "value": "0x046ca462890f25ed9394ca9f92c979ff48e1738a81822ecab96d83813c1a433c"
+            }
+          ],
+          "result": {
+            "name": "accountExample",
+            "value": {
+              "address": "0x046ca462890f25ed9394ca9f92c979ff48e1738a81822ecab96d83813c1a433c",
+              "blockNumber": "0x3b",
+              "status": {
+                "availableVotes": "0x0",
+                "exemptFromForfeit": null,
+                "forceRetired": false,
+                "inQueue": [],
+                "locked": "0x0",
+                "outQueue": [],
+                "unlocked": "0x0"
+              }
+            }
+          }
+        }
+      ]
     },
     {
       "name": "pos_getRewardsByEpoch",
       "summary": "Returns PoS reward for one Epoch",
       "params": [
         {
-          "name": "PoS Epoch",
+          "name": "PoSEpoch",
           "summary": "Epoch number",
           "required": true,
           "schema": {
@@ -81,18 +196,41 @@
         }
       ],
       "result": {
-        "name": "PoS epoch rewards",
+        "name": "PoSEpochRewards",
+        "description": "if not found will return null",
         "schema": {
           "$ref": "#/components/schemas/EpochReward"
         }
-      }
+      },
+      "errors": [
+        {
+          "code": -32078,
+          "message": "PoS chain is not enabled"
+        }
+      ],
+      "examples": [
+        {
+          "name": "epochRewards",
+          "description": "Epoch rewards",
+          "params": [
+            {
+              "name": "PoSEpoch",
+              "value": "0x2"
+            }
+          ],
+          "result": {
+            "name": "accountExample",
+            "value": {}
+          }
+        }
+      ]
     },
     {
       "name": "pos_getBlockByNumber",
       "summary": "Returns block by number.",
       "params": [
         {
-          "name": "Block number",
+          "name": "BlockNumber",
           "required": true,
           "schema": {
             "$ref": "#/components/schemas/uint"
@@ -100,18 +238,57 @@
         }
       ],
       "result": {
-        "name": "PoS block",
+        "name": "PoSBlock",
+        "description": "if not found will return null",
         "schema": {
           "$ref": "#/components/schemas/Block"
         }
-      }
+      },
+      "errors": [
+        {
+          "code": -32078,
+          "message": "PoS chain is not enabled"
+        }
+      ],
+      "examples": [
+        {
+          "name": "blockByNumberTag",
+          "description": "get block by \"latest_committed\" tag",
+          "params": [
+            {
+              "name": "BlockNumber",
+              "value": "latest_committed"
+            }
+          ],
+          "result": {
+            "name": "accountExample",
+            "value": {
+              "epoch": "0x2",
+              "hash": "0x34a7d056f1194a50cc250fa155803dd21f1ba4b38a12624b698c567fd7a02f5b",
+              "height": "0x3e",
+              "miner": "0x6f2e774cb8b83957d29e6a0b06551c11e632e1a0f46bee0d82b2fdc2b82fe4f9",
+              "nextTxNumber": "0x79",
+              "parentHash": "0xc71e41b323bb3f781835d42ada40a0f5e46c84cf10228829f8c289e90b4196dc",
+              "pivotDecision": "0x3750",
+              "round": "0x2",
+              "signatures": [
+                {
+                  "account": "0x6f2e774cb8b83957d29e6a0b06551c11e632e1a0f46bee0d82b2fdc2b82fe4f9",
+                  "votes": "0x1"
+                }
+              ],
+              "timestamp": "0x5cd05d420c2d1"
+            }
+          }
+        }
+      ]
     },
     {
       "name": "pos_getBlockByHash",
       "summary": "Returns block by hash.",
       "params": [
         {
-          "name": "Block hash",
+          "name": "BlockHash",
           "required": true,
           "schema": {
             "$ref": "#/components/schemas/hash32"
@@ -119,18 +296,57 @@
         }
       ],
       "result": {
-        "name": "PoS block",
+        "name": "PoSBlock",
+        "description": "if not found will return null",
         "schema": {
           "$ref": "#/components/schemas/Block"
         }
-      }
+      },
+      "errors": [
+        {
+          "code": -32078,
+          "message": "PoS chain is not enabled"
+        }
+      ],
+      "examples": [
+        {
+          "name": "epochRewards",
+          "description": "Epoch rewards",
+          "params": [
+            {
+              "name": "BlockHash",
+              "value": "0x34a7d056f1194a50cc250fa155803dd21f1ba4b38a12624b698c567fd7a02f5b"
+            }
+          ],
+          "result": {
+            "name": "accountExample",
+            "value": {
+              "epoch": "0x2",
+              "hash": "0x34a7d056f1194a50cc250fa155803dd21f1ba4b38a12624b698c567fd7a02f5b",
+              "height": "0x3e",
+              "miner": "0x6f2e774cb8b83957d29e6a0b06551c11e632e1a0f46bee0d82b2fdc2b82fe4f9",
+              "nextTxNumber": "0x79",
+              "parentHash": "0xc71e41b323bb3f781835d42ada40a0f5e46c84cf10228829f8c289e90b4196dc",
+              "pivotDecision": "0x3750",
+              "round": "0x2",
+              "signatures": [
+                {
+                  "account": "0x6f2e774cb8b83957d29e6a0b06551c11e632e1a0f46bee0d82b2fdc2b82fe4f9",
+                  "votes": "0x1"
+                }
+              ],
+              "timestamp": "0x5cd05d420c2d1"
+            }
+          }
+        }
+      ]
     },
     {
       "name": "pos_getTransactionByNumber",
-      "summary": "Returns POS transaction by number.",
+      "summary": "Returns PoS transaction by number.",
       "params": [
         {
-          "name": "Transaction number",
+          "name": "TransactionNumber",
           "required": true,
           "schema": {
             "$ref": "#/components/schemas/uint"
@@ -138,11 +354,47 @@
         }
       ],
       "result": {
-        "name": "POS transaction",
+        "name": "PoSTransaction",
+        "description": "if not found will return null",
         "schema": {
           "$ref": "#/components/schemas/Transaction"
         }
-      }
+      },
+      "errors": [
+        {
+          "code": -32078,
+          "message": "PoS chain is not enabled"
+        }
+      ],
+      "examples": [
+        {
+          "name": "epochRewards",
+          "description": "Epoch rewards",
+          "params": [
+            {
+              "name": "TransactionNumber",
+              "value": "0x2"
+            }
+          ],
+          "result": {
+            "name": "accountExample",
+            "value": {
+              "blockHash": "0x355497700fc4c530c4eefa47c90deb052baaba4950934dfa6143f3c7321f3df1",
+              "blockNumber": "0x3a",
+              "from": "0x6f2e774cb8b83957d29e6a0b06551c11e632e1a0f46bee0d82b2fdc2b82fe4f9",
+              "hash": "0x5505191e2f783e141fb8c84193829e494a27f197840987821514a12a0e04a10c",
+              "number": "0x71",
+              "payload": {
+                "blockHash": "0xd66e1d6050d7070cab189a524782381e211508fa204a0674ea35fa1523cfba90",
+                "height": 12780
+              },
+              "status": "Executed",
+              "timestamp": "0x5cd05bea6a9b0",
+              "type": "PivotDecision"
+            }
+          }
+        }
+      ]
     }
   ],
   "components": {
@@ -417,20 +669,34 @@
             "$ref": "#/components/schemas/hash32"
           },
           "hash": {
-            "title": "",
+            "title": "Transaction hash",
             "$ref": "#/components/schemas/hash32"
           },
           "blockHash": {
-            "title": "",
+            "title": "Hash of block that transaction belong's to",
             "$ref": "#/components/schemas/hash32"
           },
+          "blockNumber": {
+            "title": "Number of block that transaction belong's to",
+            "$ref": "#/components/schemas/uint"
+          },
+          "timestamp": {
+            "title": "Transaction's timestamp",
+            "$ref": "#/components/schemas/uint"
+          },
           "number": {
-            "title": "",
+            "title": "Transaction number",
             "$ref": "#/components/schemas/uint"
           },
           "status": {
-            "title": "",
-            "type": "string"
+            "title": "Transaction status",
+            "type": "string",
+            "description": "Enum with optional value: Executed, Failed, Discard"
+          },
+          "type": {
+            "title": "Transaction type",
+            "type": "string",
+            "description": "Enum with optional value: BlockMeta, Election, Retire, Register, UpdateVotinPower, PivoteDecision, Dispute, Other"
           },
           "payload": {
             "title": "Transaction payload",
