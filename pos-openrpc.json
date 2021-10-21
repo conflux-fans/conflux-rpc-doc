@@ -746,8 +746,7 @@
           "locked",
           "unlocked",
           "availableVotes",
-          "forceRetired",
-          "exemptFromForfeit"
+          "forfeited"
         ],
         "properties": {
           "inQueue": {
@@ -778,9 +777,9 @@
           },
           "forceRetired": {
             "title": "Force retired",
-            "type": "boolean"
+            "type": "#/components/schemas/uint"
           },
-          "exemptFromForfeit": {
+          "forfeited": {
             "title": "Exempt from forfeit",
             "$ref": "#/components/schemas/uint"
           }
