@@ -170,8 +170,8 @@
               "blockNumber": "0x3b",
               "status": {
                 "availableVotes": "0x0",
-                "exemptFromForfeit": null,
-                "forceRetired": false,
+                "forfeited": "0x0",
+                "forceRetired": null,
                 "inQueue": [],
                 "locked": "0x0",
                 "outQueue": [],
