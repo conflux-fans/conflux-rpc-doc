@@ -422,7 +422,7 @@
           },
           "pivotDecision": {
             "title": "PoS latest decison for PoW chain",
-            "$ref": "#/components/schemas/uint"
+            "$ref": "#/components/schemas/PivotBlockDecision"
           }
         }
       },
@@ -643,7 +643,7 @@
           },
           "pivotDecision": {
             "title": "Pivot decision",
-            "$ref": "#/components/schemas/uint"
+            "$ref": "#/components/schemas/PivotBlockDecision"
           },
           "signatures": {
             "title": "",
