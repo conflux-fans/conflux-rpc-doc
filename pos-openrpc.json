@@ -1,0 +1,964 @@
+{
+  "openrpc": "1.2.4",
+  "info": {
+    "title": "Conflux PoS JSON-RPC Specification",
+    "description": "A specification of the standard interface for Conflux PoS clients.",
+    "license": {
+      "name": "CC0-1.0",
+      "url": "https://creativecommons.org/publicdomain/zero/1.0/legalcode"
+    },
+    "version": "0.1.0"
+  },
+  "methods": [
+    {
+      "name": "pos_getStatus",
+      "summary": "Returns PoS chain status.",
+      "params": [],
+      "result": {
+        "name": "PoS chain current status",
+        "description": "PoS chain current status",
+        "schema": {
+          "$ref": "#/components/schemas/Status"
+        }
+      },
+      "errors": [
+        {
+          "code": -32078,
+          "message": "PoS chain is not enabled"
+        }, {
+          "code": -32602,
+          "message": "Invalid parameters: No parameters were expected",
+          "data": "Array([String(\"0x1\")])"
+        }
+      ],
+      "examples": [
+        {
+          "name": "statusExample",
+          "description": "Current network's status",
+          "params": [],
+          "result": {
+            "name": "currentStatusExample",
+            "value": {
+              "epoch": "0x1",
+              "latestCommitted": "0x23",
+              "latestVoted": "0x25",
+              "pivotDecision": "0x1d10"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "pos_getCommittee",
+      "summary": "Returns PoS Committee.",
+      "params": [
+        {
+          "name": "BlockNumber",
+          "summary": "Optional block number",
+          "description": "An parameter block number can be pass to get Committee at specified block",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/uint"
+          }
+        }
+      ],
+      "result": {
+        "name": "ChainCommitte",
+        "description": "PoS chain Committee, if not found will return null",
+        "schema": {
+          "$ref": "#/components/schemas/CommitteeState"
+        }
+      },
+      "errors": [
+        {
+          "code": -32078,
+          "message": "PoS chain is not enabled"
+        }
+      ],
+      "examples": [
+        {
+          "name": "currentCommitteExample",
+          "description": "Current committee",
+          "params": [],
+          "result": {
+            "name": "",
+            "value": {
+              "currentCommittee": {
+                "epochNumber": "0x1",
+                "nodes": [
+                  {
+                    "address": "0x6f2e774cb8b83957d29e6a0b06551c11e632e1a0f46bee0d82b2fdc2b82fe4f9",
+                    "votingPower": "0x1"
+                  }
+                ],
+                "quorumVotingPower": "0x1",
+                "totalVotingPower": "0x1"
+              },
+              "elections": [
+                {
+                  "isFinalized": false,
+                  "startBlockNumber": "0x168",
+                  "topElectingNodes": []
+                },
+                {
+                  "isFinalized": false,
+                  "startBlockNumber": "0x1a4",
+                  "topElectingNodes": []
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "pos_getAccount",
+      "summary": "Returns PoS account.",
+      "params": [
+        {
+          "name": "AccountAddress",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/hash32"
+          }
+        },
+        {
+          "name": "BlockNumber",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/uint"
+          }
+        }
+      ],
+      "result": {
+        "name": "PoSChainAccount",
+        "description": "If not found will return null",
+        "schema": {
+          "$ref": "#/components/schemas/Account"
+        }
+      },
+      "errors": [
+        {
+          "code": -32078,
+          "message": "PoS chain is not enabled"
+        }, {
+          "code": -32602,
+          "message": "Invalid params: invalid length 65, expected a 0x-prefixed hex string with length of 64."
+        }, {
+          "code": -32602,
+          "message": "`params` should have at least 1 argument(s)"
+        }, {
+          "code": -32602,
+          "message": "Invalid parameters: Expected from 1 to 2 parameters.",
+          "data": "\"Got: 3\""
+        }
+      ],
+      "examples": [
+        {
+          "name": "accountExample",
+          "description": "Account example",
+          "params": [
+            {
+              "name": "AccountAddress",
+              "value": "0x046ca462890f25ed9394ca9f92c979ff48e1738a81822ecab96d83813c1a433c"
+            }
+          ],
+          "result": {
+            "name": "accountExample",
+            "value": {
+              "address": "0x046ca462890f25ed9394ca9f92c979ff48e1738a81822ecab96d83813c1a433c",
+              "blockNumber": "0x3b",
+              "status": {
+                "availableVotes": "0x0",
+                "forfeited": "0x0",
+                "forceRetired": null,
+                "inQueue": [],
+                "locked": "0x0",
+                "outQueue": [],
+                "unlocked": "0x0"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "pos_getRewardsByEpoch",
+      "summary": "Returns PoS reward for one Epoch",
+      "params": [
+        {
+          "name": "PoSEpoch",
+          "summary": "Epoch number",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/uint"
+          }
+        }
+      ],
+      "result": {
+        "name": "PoSEpochRewards",
+        "description": "if not found will return null",
+        "schema": {
+          "$ref": "#/components/schemas/EpochReward"
+        }
+      },
+      "errors": [
+        {
+          "code": -32078,
+          "message": "PoS chain is not enabled"
+        }
+      ],
+      "examples": [
+        {
+          "name": "epochRewards",
+          "description": "Epoch rewards",
+          "params": [
+            {
+              "name": "PoSEpoch",
+              "value": "0x2"
+            }
+          ],
+          "result": {
+            "name": "accountExample",
+            "value": {}
+          }
+        }
+      ]
+    },
+    {
+      "name": "pos_getBlockByNumber",
+      "summary": "Returns block by number.",
+      "params": [
+        {
+          "name": "BlockNumber",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/uint"
+          }
+        }
+      ],
+      "result": {
+        "name": "PoSBlock",
+        "description": "if not found will return null",
+        "schema": {
+          "$ref": "#/components/schemas/Block"
+        }
+      },
+      "errors": [
+        {
+          "code": -32078,
+          "message": "PoS chain is not enabled"
+        }
+      ],
+      "examples": [
+        {
+          "name": "blockByNumberTag",
+          "description": "get block by \"latest_committed\" tag",
+          "params": [
+            {
+              "name": "BlockNumber",
+              "value": "latest_committed"
+            }
+          ],
+          "result": {
+            "name": "accountExample",
+            "value": {
+              "epoch": "0x2",
+              "hash": "0x34a7d056f1194a50cc250fa155803dd21f1ba4b38a12624b698c567fd7a02f5b",
+              "height": "0x3e",
+              "miner": "0x6f2e774cb8b83957d29e6a0b06551c11e632e1a0f46bee0d82b2fdc2b82fe4f9",
+              "nextTxNumber": "0x79",
+              "parentHash": "0xc71e41b323bb3f781835d42ada40a0f5e46c84cf10228829f8c289e90b4196dc",
+              "pivotDecision": "0x3750",
+              "round": "0x2",
+              "signatures": [
+                {
+                  "account": "0x6f2e774cb8b83957d29e6a0b06551c11e632e1a0f46bee0d82b2fdc2b82fe4f9",
+                  "votes": "0x1"
+                }
+              ],
+              "timestamp": "0x5cd05d420c2d1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "pos_getBlockByHash",
+      "summary": "Returns block by hash.",
+      "params": [
+        {
+          "name": "BlockHash",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/hash32"
+          }
+        }
+      ],
+      "result": {
+        "name": "PoSBlock",
+        "description": "if not found will return null",
+        "schema": {
+          "$ref": "#/components/schemas/Block"
+        }
+      },
+      "errors": [
+        {
+          "code": -32078,
+          "message": "PoS chain is not enabled"
+        }
+      ],
+      "examples": [
+        {
+          "name": "epochRewards",
+          "description": "Epoch rewards",
+          "params": [
+            {
+              "name": "BlockHash",
+              "value": "0x34a7d056f1194a50cc250fa155803dd21f1ba4b38a12624b698c567fd7a02f5b"
+            }
+          ],
+          "result": {
+            "name": "accountExample",
+            "value": {
+              "epoch": "0x2",
+              "hash": "0x34a7d056f1194a50cc250fa155803dd21f1ba4b38a12624b698c567fd7a02f5b",
+              "height": "0x3e",
+              "miner": "0x6f2e774cb8b83957d29e6a0b06551c11e632e1a0f46bee0d82b2fdc2b82fe4f9",
+              "nextTxNumber": "0x79",
+              "parentHash": "0xc71e41b323bb3f781835d42ada40a0f5e46c84cf10228829f8c289e90b4196dc",
+              "pivotDecision": "0x3750",
+              "round": "0x2",
+              "signatures": [
+                {
+                  "account": "0x6f2e774cb8b83957d29e6a0b06551c11e632e1a0f46bee0d82b2fdc2b82fe4f9",
+                  "votes": "0x1"
+                }
+              ],
+              "timestamp": "0x5cd05d420c2d1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "pos_getTransactionByNumber",
+      "summary": "Returns PoS transaction by number.",
+      "params": [
+        {
+          "name": "TransactionNumber",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/uint"
+          }
+        }
+      ],
+      "result": {
+        "name": "PoSTransaction",
+        "description": "if not found will return null",
+        "schema": {
+          "$ref": "#/components/schemas/Transaction"
+        }
+      },
+      "errors": [
+        {
+          "code": -32078,
+          "message": "PoS chain is not enabled"
+        }
+      ],
+      "examples": [
+        {
+          "name": "epochRewards",
+          "description": "Epoch rewards",
+          "params": [
+            {
+              "name": "TransactionNumber",
+              "value": "0x2"
+            }
+          ],
+          "result": {
+            "name": "accountExample",
+            "value": {
+              "blockHash": "0x355497700fc4c530c4eefa47c90deb052baaba4950934dfa6143f3c7321f3df1",
+              "blockNumber": "0x3a",
+              "from": "0x6f2e774cb8b83957d29e6a0b06551c11e632e1a0f46bee0d82b2fdc2b82fe4f9",
+              "hash": "0x5505191e2f783e141fb8c84193829e494a27f197840987821514a12a0e04a10c",
+              "number": "0x71",
+              "payload": {
+                "blockHash": "0xd66e1d6050d7070cab189a524782381e211508fa204a0674ea35fa1523cfba90",
+                "height": 12780
+              },
+              "status": "Executed",
+              "timestamp": "0x5cd05bea6a9b0",
+              "type": "PivotDecision"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Status": {
+        "title": "PoS chain status",
+        "type": "object",
+        "required": [
+          "latestCommitted",
+          "epoch",
+          "pivotDecision"
+        ],
+        "properties": {
+          "epoch": {
+            "title": "PoS latest epoch",
+            "$ref": "#/components/schemas/uint"
+          },
+          "latestCommitted": {
+            "title": "PoS latest committed block number",
+            "$ref": "#/components/schemas/uint"
+          },
+          "latestVoted": {
+            "title": "PoS latest voted block number",
+            "$ref": "#/components/schemas/uint"
+          },
+          "pivotDecision": {
+            "title": "PoS latest decison for PoW chain",
+            "$ref": "#/components/schemas/PivotBlockDecision"
+          }
+        }
+      },
+      "EpochReward": {
+        "title": "Epoch reward",
+        "required": [
+          "powEpochHash",
+          "accountRewards"
+        ],
+        "properties": {
+          "powEpochHash": {
+            "title": "PoW pivot chain's epoch hash",
+            "$ref": "#/components/schemas/hash32"
+          },
+          "accountRewards": {
+            "title": "Account rewards",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EpochAccountReward"
+            }
+          }
+        }
+      },
+      "EpochAccountReward": {
+        "title": "",
+        "required": [
+          "posAddress",
+          "powAddress",
+          "reward"
+        ],
+        "properties": {
+          "posAddress": {
+            "title": "",
+            "$ref": "#/components/schemas/hash32"
+          },
+          "powAddress": {
+            "title": "",
+            "type": "string"
+          },
+          "reward": {
+            "title": "",
+            "$ref": "#/components/schemas/uint"
+          }
+        }
+      },
+      "CommitteeState": {
+        "title": "PoS committee",
+        "required": [
+          "currentCommittee",
+          "elections"
+        ],
+        "properties": {
+          "currentCommittee": {
+            "title": "Current Committee",
+            "$ref": "#/components/schemas/Committee"
+          },
+          "elections": {
+            "title": "Nodes open for election",
+            "type": "array",
+            "$ref": "#/components/schemas/RpcTermData"
+          }
+        }
+      },
+      "Committee": {
+        "title": "committees",
+        "required": [
+          "epochNumber",
+          "totalVotingPower",
+          "quorumVotingPower",
+          "nodes"
+        ],
+        "properties": {
+          "epochNumber": {
+            "title": "Epoch number",
+            "$ref": "#/components/schemas/uint"
+          },
+          "totalVotingPower": {
+            "title": "Total voting power",
+            "$ref": "#/components/schemas/uint"
+          },
+          "quorumVotingPower": {
+            "title": "Quorum voting power",
+            "$ref": "#/components/schemas/uint"
+          },
+          "nodes": {
+            "title": "Committee nodes",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NodeVotingPower"
+            }
+          }
+        }
+      },
+      "RpcTermData": {
+        "title": "Epoch election data",
+        "type": "object",
+        "required": [
+          "startBlockNumber",
+          "isFinalized",
+          "topElectingNodes"
+        ],
+        "properties": {
+          "startBlockNumber": {
+            "title": "Be committee from the block number",
+            "$ref": "#/components/schemas/uint"
+          },
+          "isFinalized": {
+            "title": "Is finalize",
+            "type": "boolean"
+          },
+          "topElectingNodes": {
+            "title": "Top electing nodes",
+            "type": "array",
+            "$ref": "#/components/schemas/NodeVotingPower"
+          }
+        }
+      },
+      "NodeVotingPower": {
+        "title": "Node address and voting power",
+        "type": "object",
+        "required": [
+          "address",
+          "votingPower"
+        ],
+        "properties": {
+          "address": {
+            "title": "Account address",
+            "$ref": "#/components/schemas/hash32"
+          },
+          "votingPower": {
+            "title": "Voting power",
+            "$ref": "#/components/schemas/uint"
+          }
+        }
+      },
+      "Account": {
+        "title": "PoS Account",
+        "type": "object",
+        "required": [
+          "address",
+          "blockNumber",
+          "status"
+        ],
+        "properties": {
+          "address": {
+            "title": "address",
+            "$ref": "#/components/schemas/hash32"
+          },
+          "blockNumber": {
+            "title": "Block number",
+            "$ref": "#/components/schemas/uint"
+          },
+          "status": {
+            "title": "Node lock status",
+            "$ref": "#/components/schemas/NodeLockStatus"
+          }
+        }
+      },
+      "PivotBlockDecision": {
+        "title": "",
+        "type": "object",
+        "properties": {
+          "height": {
+            "title": "",
+            "$ref": "#/components/schemas/uint"
+          },
+          "blockHash": {
+            "title": "",
+            "$ref": "#/components/schemas/hash32"
+          }
+        }
+      },
+      "Block": {
+        "title": "PoS Block",
+        "type": "object",
+        "required": [
+          "epoch",
+          "round",
+          "nextTxNumber",
+          "height",
+          "hash",
+          "parentHash",
+          "timestamp",
+          "signatures"
+        ],
+        "properties": {
+          "epoch": {
+            "title": "Epoch number corresponds to the set of validators that are active for this block",
+            "$ref": "#/components/schemas/uint"
+          },
+          "round": {
+            "title": "Block round number",
+            "$ref": "#/components/schemas/uint"
+          },
+          "nextTxNumber": {
+            "title": "Number of next will generated transaction",
+            "$ref": "#/components/schemas/uint"
+          },
+          "height": {
+            "title": "height",
+            "$ref": "#/components/schemas/uint"
+          },
+          "hash": {
+            "title": "Block hash",
+            "$ref": "#/components/schemas/hash32"
+          },
+          "parentHash": {
+            "title": "Block parent hash",
+            "$ref": "#/components/schemas/hash32"
+          },
+          "timestamp": {
+            "title": "Block timestamp",
+            "$ref": "#/components/schemas/uint"
+          },
+          "miner": {
+            "title": "Miner address",
+            "$ref": "#/components/schemas/hash32"
+          },
+          "pivotDecision": {
+            "title": "Pivot decision",
+            "$ref": "#/components/schemas/PivotBlockDecision"
+          },
+          "signatures": {
+            "title": "",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Signature"
+            }
+          }
+        }
+      },
+      "Transaction": {
+        "title": "PoS transaction",
+        "type": "object",
+        "required": [
+          "from",
+          "hash",
+          "blockHash",
+          "number"
+        ],
+        "properties": {
+          "from": {
+            "title": "Transaction sender",
+            "$ref": "#/components/schemas/hash32"
+          },
+          "hash": {
+            "title": "Transaction hash",
+            "$ref": "#/components/schemas/hash32"
+          },
+          "blockHash": {
+            "title": "Hash of block that transaction belong's to",
+            "$ref": "#/components/schemas/hash32"
+          },
+          "blockNumber": {
+            "title": "Number of block that transaction belong's to",
+            "$ref": "#/components/schemas/uint"
+          },
+          "timestamp": {
+            "title": "Transaction's timestamp",
+            "$ref": "#/components/schemas/uint"
+          },
+          "number": {
+            "title": "Transaction number",
+            "$ref": "#/components/schemas/uint"
+          },
+          "status": {
+            "title": "Transaction status",
+            "type": "string",
+            "description": "Enum with optional value: Executed, Failed, Discard"
+          },
+          "type": {
+            "title": "Transaction type",
+            "type": "string",
+            "description": "Enum with optional value: BlockMeta, Election, Retire, Register, UpdateVotinPower, PivoteDecision, Dispute, Other"
+          },
+          "payload": {
+            "title": "Transaction payload",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ElectionPayload"
+              },
+              {
+                "$ref": "#/components/schemas/RetirePayload"
+              },
+              {
+                "$ref": "#/components/schemas/UpdateVotingPowerPayload"
+              },
+              {
+                "$ref": "#/components/schemas/DisputePayload"
+              },
+              {
+                "$ref": "#/components/schemas/RegisterPayload"
+              },
+              {
+                "$ref": "#/components/schemas/PivotBlockDecisionPayload"
+              }
+            ]
+          }
+        }
+      },
+      "Signature": {
+        "title": "Block signature",
+        "type": "object",
+        "properties": {
+          "account": {
+            "title": "Node account address",
+            "$ref": "#/components/schemas/hash32"
+          },
+          "votes": {
+            "title": "Node vote number",
+            "$ref": "#/components/schemas/uint"
+          }
+        }
+      },
+      "NodeLockStatus": {
+        "title": "Node lock status",
+        "type": "object",
+        "required": [
+          "inQueue",
+          "outQueue",
+          "locked",
+          "unlocked",
+          "availableVotes",
+          "forfeited"
+        ],
+        "properties": {
+          "inQueue": {
+            "title": "In queue votes",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VotePowerState"
+            }
+          },
+          "locked": {
+            "title": "Locked votes",
+            "$ref": "#/components/schemas/uint"
+          },
+          "outQueue": {
+            "title": "Out queue votes",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VotePowerState"
+            }
+          },
+          "unlocked": {
+            "title": "Unlocked votes",
+            "$ref": "#/components/schemas/uint"
+          },
+          "availableVotes": {
+            "title": "Available votes",
+            "$ref": "#/components/schemas/uint"
+          },
+          "forceRetired": {
+            "title": "Force retired",
+            "type": "#/components/schemas/uint"
+          },
+          "forfeited": {
+            "title": "Exempt from forfeit",
+            "$ref": "#/components/schemas/uint"
+          }
+        }
+      },
+      "VotePowerState": {
+        "title": "Vote power state",
+        "type": "object",
+        "required": [
+          "endBlockNumber",
+          "power"
+        ],
+        "properties": {
+          "endBlockNumber": {
+            "title": "",
+            "$ref": "#/components/schemas/uint"
+          },
+          "power": {
+            "title": "",
+            "$ref": "#/components/schemas/uint"
+          }
+        }
+      },
+      "ElectionPayload": {
+        "title": "ElectionPayload",
+        "type": "object",
+        "properties": {
+          "publicKey": {
+            "title": "",
+            "type": "string"
+          },
+          "targetTerm": {
+            "title": "",
+            "$ref": "#/components/schemas/uint"
+          },
+          "vrfProof": {
+            "title": "",
+            "type": "string"
+          },
+          "vrfPublicKey": {
+            "title": "",
+            "$ref": "#/components/schemas/hash32"
+          }
+        }
+      },
+      "RetirePayload": {
+        "title": "RetirePayload",
+        "type": "object",
+        "properties": {
+          "nodeId": {
+            "title": "",
+            "$ref": "#/components/schemas/hash32"
+          },
+          "votes": {
+            "title": "",
+            "$ref": "#/components/schemas/uint"
+          }
+        }
+      },
+      "UpdateVotingPowerPayload": {
+        "title": "UpdateVotingPowerPayload",
+        "type": "object",
+        "properties": {
+          "nodeAddress": {
+            "title": "",
+            "$ref": "#/components/schemas/hash32"
+          },
+          "votingPower": {
+            "title": "",
+            "$ref": "#/components/schemas/uint"
+          }
+        }
+      },
+      "DisputePayload": {
+        "title": "DisputePayload",
+        "type": "object",
+        "properties": {
+          "address": {
+            "title": "",
+            "$ref": "#/components/schemas/hash32"
+          },
+          "blsPubKey": {
+            "title": "",
+            "type": "string"
+          },
+          "vrfPubKey": {
+            "title": "",
+            "type": "string"
+          },
+          "conflictingVotes": {
+            "title": "",
+            "$ref": "#/components/schemas/uint"
+          }
+        }
+      },
+      "RegisterPayload": {
+        "title": "RegisterPayload",
+        "type": "object",
+        "properties": {
+          "publicKey": {
+            "title": "",
+            "type": "string"
+          },
+          "vrfPublicKey": {
+            "title": "",
+            "type": "string"
+          }
+        }
+      },
+      "PivotBlockDecisionPayload": {
+        "title": "PivotBlockDecisionPayload",
+        "type": "object",
+        "properties": {
+          "blockHash": {
+            "title": "",
+            "$ref": "#/components/schemas/hash32"
+          },
+          "height": {
+            "title": "",
+            "$ref": "#/components/schemas/uint"
+          }
+        }
+      },
+      "h40Address": {
+        "title": "hex encoded address",
+        "type": "string",
+        "pattern": "^0x[0-9a-f]{40}$"
+      },
+      "address": {
+        "title": "base32 encoded address",
+        "type": "string"
+      },
+      "addresses": {
+        "title": "hex encoded address",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/h40Address"
+        }
+      },
+      "byte": {
+        "title": "hex encoded byte",
+        "type": "string",
+        "pattern": "^0x([a-fA-F0-9]?){1,2}$"
+      },
+      "bytes": {
+        "title": "hex encoded bytes",
+        "type": "string",
+        "pattern": "^0x[0-9a-f]+$"
+      },
+      "bytes32": {
+        "title": "32 hex encoded bytes",
+        "type": "string",
+        "pattern": "^0x[0-9a-f]{64}$"
+      },
+      "bytes256": {
+        "title": "256 hex encoded bytes",
+        "type": "string",
+        "pattern": "^0x[0-9a-f]{512}$"
+      },
+      "bytes65": {
+        "title": "65 hex encoded bytes",
+        "type": "string",
+        "pattern": "^0x[0-9a-f]{512}$"
+      },
+      "uint": {
+        "title": "hex encoded unsigned integer",
+        "type": "string",
+        "pattern": "^0x[0-9a-f]+$"
+      },
+      "uint256": {
+        "title": "hex encoded unsigned integer",
+        "type": "string",
+        "pattern": "^0x[0-9a-f]{64}$"
+      },
+      "hash32": {
+        "title": "32 byte hex value",
+        "type": "string",
+        "pattern": "^0x[0-9a-f]{64}$"
+      }
+    }
+  }
+}
