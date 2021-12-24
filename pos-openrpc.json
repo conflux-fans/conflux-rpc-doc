@@ -267,7 +267,7 @@
               "hash": "0x34a7d056f1194a50cc250fa155803dd21f1ba4b38a12624b698c567fd7a02f5b",
               "height": "0x3e",
               "miner": "0x6f2e774cb8b83957d29e6a0b06551c11e632e1a0f46bee0d82b2fdc2b82fe4f9",
-              "nextTxNumber": "0x79",
+              "lastTxNumber": "0x79",
               "parentHash": "0xc71e41b323bb3f781835d42ada40a0f5e46c84cf10228829f8c289e90b4196dc",
               "pivotDecision": "0x3750",
               "round": "0x2",
@@ -325,7 +325,7 @@
               "hash": "0x34a7d056f1194a50cc250fa155803dd21f1ba4b38a12624b698c567fd7a02f5b",
               "height": "0x3e",
               "miner": "0x6f2e774cb8b83957d29e6a0b06551c11e632e1a0f46bee0d82b2fdc2b82fe4f9",
-              "nextTxNumber": "0x79",
+              "lastTxNumber": "0x79",
               "parentHash": "0xc71e41b323bb3f781835d42ada40a0f5e46c84cf10228829f8c289e90b4196dc",
               "pivotDecision": "0x3750",
               "round": "0x2",
@@ -601,7 +601,7 @@
         "required": [
           "epoch",
           "round",
-          "nextTxNumber",
+          "lastTxNumber",
           "height",
           "hash",
           "parentHash",
@@ -617,7 +617,7 @@
             "title": "Block round number",
             "$ref": "#/components/schemas/uint"
           },
-          "nextTxNumber": {
+          "lastTxNumber": {
             "title": "Number of next will generated transaction",
             "$ref": "#/components/schemas/uint"
           },
